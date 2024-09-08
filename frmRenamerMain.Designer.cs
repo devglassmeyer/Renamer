@@ -33,6 +33,8 @@
             btnChooseDir1 = new Button();
             label1 = new Label();
             lstSubDirs = new ListBox();
+            lstFiles = new ListBox();
+            label2 = new Label();
             SuspendLayout();
             // 
             // lblMain
@@ -78,16 +80,37 @@
             // 
             lstSubDirs.FormattingEnabled = true;
             lstSubDirs.ItemHeight = 15;
-            lstSubDirs.Location = new Point(6, 159);
+            lstSubDirs.Location = new Point(2, 152);
             lstSubDirs.Name = "lstSubDirs";
-            lstSubDirs.Size = new Size(593, 94);
+            lstSubDirs.Size = new Size(626, 94);
             lstSubDirs.TabIndex = 4;
+            lstSubDirs.SelectedIndexChanged += lstSubDirs_SelectedIndexChanged;
+            // 
+            // lstFiles
+            // 
+            lstFiles.FormattingEnabled = true;
+            lstFiles.ItemHeight = 15;
+            lstFiles.Location = new Point(2, 294);
+            lstFiles.Name = "lstFiles";
+            lstFiles.Size = new Size(626, 124);
+            lstFiles.TabIndex = 5;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(2, 276);
+            label2.Name = "label2";
+            label2.Size = new Size(30, 15);
+            label2.TabIndex = 6;
+            label2.Text = "Files";
             // 
             // frmRenamerMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(640, 385);
+            ClientSize = new Size(640, 473);
+            Controls.Add(label2);
+            Controls.Add(lstFiles);
             Controls.Add(lstSubDirs);
             Controls.Add(label1);
             Controls.Add(btnChooseDir1);
@@ -107,5 +130,7 @@
         private Button btnChooseDir1;
         private Label label1;
         private ListBox lstSubDirs;
+        private ListBox lstFiles;
+        private Label label2;
     }
 }
