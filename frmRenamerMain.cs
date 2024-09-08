@@ -62,6 +62,8 @@ namespace Renamer
 
         private void get_files_in_folder(string path)
         {
+            var save_loading = _loading_data;
+            _loading_data = true;
             lstFiles.Items.Clear();
             string[] files_in_dir = Directory.GetFiles(path);
 
@@ -72,6 +74,7 @@ namespace Renamer
                     lstFiles.Items.Add((string)a_file);
                 }
             }
+            _loading_data = save_loading;
         }
 
         private void lstSubDirs_SelectedIndexChanged(object sender, EventArgs e)
@@ -80,6 +83,30 @@ namespace Renamer
             {
                 string full_path = System.IO.Path.Combine(txtMainFolder.Text, lstSubDirs.SelectedItem.ToString());
                 get_files_in_folder(full_path);
+            }
+        }
+
+        private void paint_renamed_file(string parent_folder, string file_name)
+        {
+            string new_file_name = file_name;
+            if (!string.IsNullOrEmpty(parent_folder))
+            {
+                DirectoryInfo directoryInfo = new DirectoryInfo(parent_folder);
+                string directoryName = directoryInfo.Name;
+                var start_index = file_name.IndexOf(" " + directoryName + " -");
+                if (start_index != -1)
+                {
+                    new_file_name = file_name.Remove(start_index, directoryName.Length + 3);
+                }
+            }
+            txtNewName.Text = new_file_name;
+        }
+
+        private void lstFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_loading_data)
+            {
+                paint_renamed_file(txtMainFolder.Text, lstFiles.SelectedItem.ToString());
             }
         }
     }

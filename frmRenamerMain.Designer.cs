@@ -35,6 +35,7 @@
             lstSubDirs = new ListBox();
             lstFiles = new ListBox();
             label2 = new Label();
+            txtNewName = new TextBox();
             SuspendLayout();
             // 
             // lblMain
@@ -94,6 +95,7 @@
             lstFiles.Name = "lstFiles";
             lstFiles.Size = new Size(626, 124);
             lstFiles.TabIndex = 5;
+            lstFiles.SelectedIndexChanged += lstFiles_SelectedIndexChanged;
             // 
             // label2
             // 
@@ -104,11 +106,19 @@
             label2.TabIndex = 6;
             label2.Text = "Files";
             // 
+            // txtNewName
+            // 
+            txtNewName.Location = new Point(3, 442);
+            txtNewName.Name = "txtNewName";
+            txtNewName.Size = new Size(625, 23);
+            txtNewName.TabIndex = 7;
+            // 
             // frmRenamerMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(640, 473);
+            ClientSize = new Size(640, 501);
+            Controls.Add(txtNewName);
             Controls.Add(label2);
             Controls.Add(lstFiles);
             Controls.Add(lstSubDirs);
@@ -132,5 +142,6 @@
         private ListBox lstSubDirs;
         private ListBox lstFiles;
         private Label label2;
+        private TextBox txtNewName;
     }
 }
