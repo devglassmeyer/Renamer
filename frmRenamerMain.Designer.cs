@@ -37,6 +37,7 @@
             label2 = new Label();
             txtNewName = new TextBox();
             lblNumOfAlbums = new Label();
+            btnRenameAll = new Button();
             SuspendLayout();
             // 
             // lblMain
@@ -126,11 +127,24 @@
             lblNumOfAlbums.TabIndex = 8;
             lblNumOfAlbums.Text = "Number of Albums With Songs to be Renamed: 0";
             // 
+            // btnRenameAll
+            // 
+            btnRenameAll.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            btnRenameAll.Font = new Font("Segoe UI", 14F);
+            btnRenameAll.Location = new Point(12, 526);
+            btnRenameAll.Name = "btnRenameAll";
+            btnRenameAll.Size = new Size(615, 42);
+            btnRenameAll.TabIndex = 9;
+            btnRenameAll.Text = "Rename All Files - Do It!";
+            btnRenameAll.UseVisualStyleBackColor = true;
+            btnRenameAll.Click += btnRenameAll_Click;
+            // 
             // frmRenamerMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(640, 531);
+            ClientSize = new Size(640, 580);
+            Controls.Add(btnRenameAll);
             Controls.Add(lblNumOfAlbums);
             Controls.Add(txtNewName);
             Controls.Add(label2);
@@ -158,5 +172,6 @@
         private Label label2;
         private TextBox txtNewName;
         private Label lblNumOfAlbums;
+        private Button btnRenameAll;
     }
 }

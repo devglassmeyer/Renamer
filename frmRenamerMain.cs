@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace Renamer
     public partial class frmRenamerMain : Form
     {
         bool _loading_data = false;
+        List<artistdata> _artistdata;
 
         public frmRenamerMain()
         {
@@ -85,7 +88,7 @@ namespace Renamer
                             }
                         }
                     }
-                        
+
                 }
             }
             return true;
@@ -111,6 +114,69 @@ namespace Renamer
             _loading_data = save_loading;
         }
 
+        private void rename_all_files()
+        {
+            List<string> artists_no_albums = new List<string>();
+            _artistdata = new List<artistdata>();
+            if (lstSubDirs.Items.Count > 0)
+            {
+                string[] artist_directories = Directory.GetDirectories(txtMainFolder.Text);
+                if (artist_directories.Length > 0)
+                {
+                    foreach (string artist_directory in artist_directories)
+                    {
+                        DirectoryInfo artist_dir = new DirectoryInfo(artist_directory);
+                        string artist_name = artist_dir.Name;
+                        string[] album_dir_names = Directory.GetDirectories(artist_directory);
+                        artistdata ad = new artistdata(artist_name, artist_directory);
+                        
+                        if (album_dir_names.Length > 0)
+                        {
+                            foreach (string album in album_dir_names)
+                            {
+                                albumdata al = new albumdata(album, artist_name);
+                                string[] files_in_dir = Directory.GetFiles(album);
+                                foreach (string a_file in files_in_dir)
+                                {
+                                    if (a_file.ToLower().EndsWith(".flac"))
+                                    {
+                                        var start_index = a_file.IndexOf(" " + artist_name + " -");
+                                        if (start_index != -1)
+                                        {
+                                            string new_file_name = a_file.Remove(start_index, artist_name.Length + 3);
+                                            songdata sd = new songdata(a_file, new_file_name);
+                                            sd.IsRenamed = true;
+                                            al.add_song(sd);
+                                            File.Move(a_file, new_file_name);
+                                        }
+                                        else
+                                        {
+                                            songdata sd = new songdata(a_file, a_file);
+                                            sd.IsRenamed = false;
+                                            al.add_song(sd);                                        }
+                                    }
+                                }
+                                ad.AddAlbum(al);
+                            }
+                        }
+                        else
+                        {
+                            artists_no_albums.Add(artist_name);
+                        }
+                        _artistdata.Add(ad);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Hey, buddy. No artist directories found. So, nothing to rename!", "Nothing to Do", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Hey, buddy. There are no directories to look through. So, nothing to rename!", "Nothing to Do", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void lstSubDirs_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstSubDirs.Items.Count > 0 && lstSubDirs.SelectedItems.Count > 0 && lstSubDirs.SelectedItem != null)
@@ -125,7 +191,7 @@ namespace Renamer
             string new_file_name = file_name;
             if (!string.IsNullOrEmpty(parent_folder))
             {
-                
+
                 DirectoryInfo directoryInfo = new DirectoryInfo(parent_folder);
                 string artist_directory = directoryInfo.Parent.Name;
                 var start_index = file_name.IndexOf(" " + artist_directory + " -");
@@ -143,6 +209,11 @@ namespace Renamer
             {
                 paint_renamed_file(lstSubDirs.SelectedItem.ToString(), lstFiles.SelectedItem.ToString());
             }
+        }
+
+        private void btnRenameAll_Click(object sender, EventArgs e)
+        {
+            rename_all_files();
         }
     }
 }
