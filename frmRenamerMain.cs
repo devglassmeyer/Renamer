@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Renamer
 {
@@ -38,9 +39,9 @@ namespace Renamer
             }
         }
 
-
         private void get_directories_in_folder(string path)
         {
+            lblNumOfAlbums.Text = "Number of Albums With Songs to be Renamed: 0";
             lstSubDirs.Items.Clear();
             lstFiles.Items.Clear();
             string[] dir_names = Directory.GetDirectories(path);
@@ -50,14 +51,44 @@ namespace Renamer
             {
                 foreach (string dir in dir_names)
                 {
-                    lstSubDirs.Items.Add(dir);
+                    has_files_to_be_renamed(dir);
                 }
             }
             _loading_data = false;
             if (lstSubDirs.Items.Count > 0)
             {
+                lblNumOfAlbums.Text = "Number of Albums With Songs to be Renamed: " + lstSubDirs.Items.Count.ToString();
                 lstSubDirs.SelectedIndex = 0;
             }
+        }
+
+        private bool has_files_to_be_renamed(string path)
+        {
+            DirectoryInfo artist_dir = new DirectoryInfo(path);
+            string artist_dir_name = artist_dir.Name;
+            string[] album_dir_names = Directory.GetDirectories(path);
+
+            if (album_dir_names.Length > 0)
+            {
+                foreach (string album in album_dir_names)
+                {
+                    string[] files_in_dir = Directory.GetFiles(album);
+                    foreach (string a_file in files_in_dir)
+                    {
+                        if (a_file.ToLower().EndsWith(".flac"))
+                        {
+                            var start_index = a_file.IndexOf(" " + artist_dir_name + " -");
+                            if (start_index != -1)
+                            {
+                                lstSubDirs.Items.Add(album);
+                                break;
+                            }
+                        }
+                    }
+                        
+                }
+            }
+            return true;
         }
 
         private void get_files_in_folder(string path)
@@ -71,7 +102,10 @@ namespace Renamer
             {
                 foreach (string a_file in files_in_dir)
                 {
-                    lstFiles.Items.Add((string)a_file);
+                    if (a_file.ToLower().EndsWith(".flac"))
+                    {
+                        lstFiles.Items.Add((string)a_file);
+                    }
                 }
             }
             _loading_data = save_loading;
@@ -91,12 +125,13 @@ namespace Renamer
             string new_file_name = file_name;
             if (!string.IsNullOrEmpty(parent_folder))
             {
+                
                 DirectoryInfo directoryInfo = new DirectoryInfo(parent_folder);
-                string directoryName = directoryInfo.Name;
-                var start_index = file_name.IndexOf(" " + directoryName + " -");
+                string artist_directory = directoryInfo.Parent.Name;
+                var start_index = file_name.IndexOf(" " + artist_directory + " -");
                 if (start_index != -1)
                 {
-                    new_file_name = file_name.Remove(start_index, directoryName.Length + 3);
+                    new_file_name = file_name.Remove(start_index, artist_directory.Length + 3);
                 }
             }
             txtNewName.Text = new_file_name;
@@ -106,7 +141,7 @@ namespace Renamer
         {
             if (!_loading_data)
             {
-                paint_renamed_file(txtMainFolder.Text, lstFiles.SelectedItem.ToString());
+                paint_renamed_file(lstSubDirs.SelectedItem.ToString(), lstFiles.SelectedItem.ToString());
             }
         }
     }

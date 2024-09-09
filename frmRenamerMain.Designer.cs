@@ -36,6 +36,7 @@
             lstFiles = new ListBox();
             label2 = new Label();
             txtNewName = new TextBox();
+            lblNumOfAlbums = new Label();
             SuspendLayout();
             // 
             // lblMain
@@ -52,7 +53,7 @@
             // txtMainFolder
             // 
             txtMainFolder.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            txtMainFolder.Location = new Point(2, 123);
+            txtMainFolder.Location = new Point(1, 88);
             txtMainFolder.Name = "txtMainFolder";
             txtMainFolder.Size = new Size(597, 23);
             txtMainFolder.TabIndex = 1;
@@ -60,7 +61,7 @@
             // btnChooseDir1
             // 
             btnChooseDir1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnChooseDir1.Location = new Point(603, 122);
+            btnChooseDir1.Location = new Point(602, 87);
             btnChooseDir1.Name = "btnChooseDir1";
             btnChooseDir1.Size = new Size(25, 23);
             btnChooseDir1.TabIndex = 2;
@@ -71,7 +72,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(3, 101);
+            label1.Location = new Point(2, 66);
             label1.Name = "label1";
             label1.Size = new Size(103, 15);
             label1.TabIndex = 3;
@@ -79,19 +80,21 @@
             // 
             // lstSubDirs
             // 
+            lstSubDirs.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lstSubDirs.FormattingEnabled = true;
             lstSubDirs.ItemHeight = 15;
-            lstSubDirs.Location = new Point(2, 152);
+            lstSubDirs.Location = new Point(2, 142);
             lstSubDirs.Name = "lstSubDirs";
-            lstSubDirs.Size = new Size(626, 94);
+            lstSubDirs.Size = new Size(626, 139);
             lstSubDirs.TabIndex = 4;
             lstSubDirs.SelectedIndexChanged += lstSubDirs_SelectedIndexChanged;
             // 
             // lstFiles
             // 
+            lstFiles.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             lstFiles.FormattingEnabled = true;
             lstFiles.ItemHeight = 15;
-            lstFiles.Location = new Point(2, 294);
+            lstFiles.Location = new Point(1, 345);
             lstFiles.Name = "lstFiles";
             lstFiles.Size = new Size(626, 124);
             lstFiles.TabIndex = 5;
@@ -100,7 +103,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(2, 276);
+            label2.Location = new Point(1, 327);
             label2.Name = "label2";
             label2.Size = new Size(30, 15);
             label2.TabIndex = 6;
@@ -108,16 +111,27 @@
             // 
             // txtNewName
             // 
-            txtNewName.Location = new Point(3, 442);
+            txtNewName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtNewName.Location = new Point(2, 493);
             txtNewName.Name = "txtNewName";
             txtNewName.Size = new Size(625, 23);
             txtNewName.TabIndex = 7;
+            // 
+            // lblNumOfAlbums
+            // 
+            lblNumOfAlbums.AutoSize = true;
+            lblNumOfAlbums.Location = new Point(1, 124);
+            lblNumOfAlbums.Name = "lblNumOfAlbums";
+            lblNumOfAlbums.Size = new Size(267, 15);
+            lblNumOfAlbums.TabIndex = 8;
+            lblNumOfAlbums.Text = "Number of Albums With Songs to be Renamed: 0";
             // 
             // frmRenamerMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(640, 501);
+            ClientSize = new Size(640, 531);
+            Controls.Add(lblNumOfAlbums);
             Controls.Add(txtNewName);
             Controls.Add(label2);
             Controls.Add(lstFiles);
@@ -143,5 +157,6 @@
         private ListBox lstFiles;
         private Label label2;
         private TextBox txtNewName;
+        private Label lblNumOfAlbums;
     }
 }
