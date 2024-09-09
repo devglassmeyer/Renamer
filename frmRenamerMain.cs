@@ -13,6 +13,21 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Renamer
 {
+    // One day I had a need to rename several thousand files. These are song files that contained the same of the artist in the filename.
+    // These files are already organized in directory Artist/Album/song_name_here.flac
+    // Whey did these songs have the name of the artist in the filename? I don't remember, maybe the default settings when I ripped
+    // all my CD's. Anyway here I am having to rename all these files. I didn't want to do all the clicky stuff and carefully
+    // remove the artist name from each song file. Ugh. No way. 
+    //
+    // That is why this program exists, to do the actuall file rename. For me this is a run once utility
+    // that I had some fun writing. 
+    // I know it isn't supper efficent. And I know the classes I created aren't really designed like I would normally design something.
+    // Good grief, they aren't even used, so why do they exist at all? I keep asing them that and they won't give me a straight answer.
+    //
+    // Anyway I wrote this program. I ran it. It renamed all my files. I'm happy now.
+    // If you are reading this hello there. Thanks for taking the time to explore this little program.
+    // I hope you have a nice day. Cheers!
+
     public partial class frmRenamerMain : Form
     {
         bool _loading_data = false;
